@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- This meta tag is crucial for responsive design, telling the browser to set the page width to the device's screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authenticate Your Certificate | ISO 9001:2015 Certified</title>
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0a2540;
+            --secondary: #1a56db;
+            --accent: #00a896;
+            --light: #f8fafc;
+            --dark: #0f172a;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray: #64748b;
+            --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px; /* Limits the max width on large screens */
+            margin: 0 auto;
+            padding: 0 20px; /* Adds padding on the sides for smaller screens */
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex; /* Uses Flexbox for a flexible header layout */
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap; /* Allows header items to wrap on smaller screens */
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            background: var(--accent);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .logo-subtext {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .menu-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        /* Animation: Pulse on hover */
+        .menu-btn:hover {
+            transform: scale(1.05);
+            background: #008c7c;
+            animation: pulse 1.5s infinite;
+        }
+
+        .menu-btn:active {
+            transform: scale(0.95);
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 168, 150, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 168, 150, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 168, 150, 0); }
+        }
+
+        main {
+            flex: 1;
+            padding: 40px 0 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: calc(100vh - 200px);
+        }
+
+        .hero {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .iso-badge {
+            background: linear-gradient(135deg, #1a56db, #0d4a9e);
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(26, 86, 219, 0.3);
+            margin-top: 20px;
+        }
+
+        .verification-section {
+            width: 100%; /* Ensures the section takes up full width on all screens */
+            max-width: 600px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            margin-top: 20px;
+            animation: slideUp 0.6s ease;
+        }
+
+        .section-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-icon {
+            background: var(--accent);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .verification-content {
+            padding: 25px;
+        }
+
+        .cert-input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .cert-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.2);
+        }
+
+        .verify-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            width: 100%; /* Makes the button full width */
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* Animation: Hover and active effects for verify button */
+        .verify-btn:hover {
+            background: #1e429f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(26, 86, 219, 0.3);
+        }
+        .verify-btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .result-container {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .result-success {
+            background: #dcfce7;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+        }
+
+        .result-failure {
+            background: #fee2e2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+        }
+
+        .result-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .result-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .result-details {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f5f9;
+            flex-wrap: wrap; /* Allows labels and values to wrap on smaller screens */
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--gray);
+        }
+
+        .qr-section-display {
+            display: none; /* Initially hidden */
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding-top: 15px;
+            text-align: center;
+        }
+        
+        .qr-image {
+            width: 200px;
+            height: 200px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: var(--gray);
+        }
+        
+        .qr-image canvas {
+            max-width: 100%; /* Ensures the canvas is fluid within its container */
+            height: auto;
+        }
+
+        .download-qr {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Animation: Hover and active effects for download button */
+        .download-qr:hover {
+            background: #0d3a6b;
+            box-shadow: 0 4px 8px rgba(10, 37, 64, 0.2);
+            transform: translateY(-2px);
+        }
+        .download-qr:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        footer {
+            background: var(--primary);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 25px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Menu Styles */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .menu-container {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 90%; /* Responsive width for the menu */
+            max-width: 400px;
+            height: 100%;
+            background: white;
+            z-index: 1001;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+            transition: right 0.4s ease;
+            overflow-y: auto;
+            padding-bottom: 25px; /* Added for better scrolling */
+        }
+
+        .menu-container.active {
+            right: 0;
+        }
+
+        .menu-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .menu-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .form-group input, .form-group textarea {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease-in-out;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 2px rgba(26, 86, 219, 0.2);
+        }
+
+        .menu-section {
+            padding: 25px 20px;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .menu-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title-sm {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .text-sm {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+
+        .upload-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 20px;
+        }
+
+        /* Animation: Scale up on hover for upload area */
+        .upload-area:hover {
+            border-color: var(--secondary);
+            background: rgba(26, 86, 219, 0.05);
+            transform: scale(1.01);
+        }
+
+        .upload-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .cert-cards {
+            display: grid;
+            gap: 15px;
+        }
+
+        .cert-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            border: 1px solid #e2e8f0;
+        }
+
+        .cert-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .cert-header {
+            background: linear-gradient(135deg, var(--secondary), #0d4a9e);
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cert-number {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .cert-body {
+            padding: 15px;
+        }
+
+        .cert-thumbnail {
+            width: 100%; /* Ensures the image is fluid and takes up the full width of its container */
+            height: 120px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 15px;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 1.5rem;
+        }
+
+        .cert-actions {
+            display: grid; /* Uses CSS Grid for a clean, responsive layout of buttons */
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .cert-btn {
+            padding: 8px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: var(--transition);
+            font-size: 0.85rem;
+        }
+
+        .view-btn {
+            background: #dbeafe;
+            color: var(--secondary);
+        }
+
+        .qr-btn {
+            background: #fff8e1;
+            color: #f59e0b;
+        }
+
+        .delete-btn {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+        
+        /* Animation: Lift and scale on hover for cert buttons */
+        .cert-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+
+        .qr-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .qr-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .qr-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        .qr-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* Animation: Hover and active effects for qr button */
+        .qr-btn:hover {
+            background: #008c7c;
+            transform: translateY(-2px);
+        }
+        .qr-btn:active {
+            transform: translateY(0);
+        }
+
+        .qr-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding-top: 15px;
+        }
+
+        .qr-image {
+            width: 200px;
+            height: 200px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: var(--gray);
+        }
+
+        .download-qr {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .download-qr:hover {
+            background: #0d3a6b;
+        }
+
+        /* Password Modal */
+        .password-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .password-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%; /* Responsive width for the modal */
+            max-width: 450px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: translateY(20px);
+            transition: transform 0.4s ease;
+        }
+
+        .password-modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            background: var(--primary);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .modal-subtitle {
+            opacity: 0.8;
+            font-size: 1rem;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .password-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .password-input {
+            position: relative;
+        }
+
+        .password-field {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .password-field:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.2);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .submit-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        /* Animation: Hover and active effects for submit button */
+        .submit-btn:hover {
+            background: #1e429f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(26, 86, 219, 0.3);
+        }
+        .submit-btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .submit-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        /* Image Preview Modal */
+        .image-preview-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .preview-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .close-preview {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .preview-image {
+            max-width: 100%; /* Ensures the image scales down on smaller screens */
+            max-height: 80vh;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Message Box */
+        .message-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            z-index: 4000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .message-box.show {
+            display: block;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .message-box .message-text {
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .menu-container {
+                width: 95%;
+            }
+            
+            /* Adjust the detail item for smaller screens */
+            .detail-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .detail-label {
+                margin-bottom: 5px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.7rem;
+            }
+            
+            .section-title {
+                font-size: 1.2rem;
+            }
+            
+            .cert-actions {
+                grid-template-columns: 1fr 1fr; /* Changes grid to 2 columns on small mobile devices */
+                gap: 5px;
+            }
+            
+            .cert-btn {
+                padding: 6px;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">A</div>
+                    <div>
+                        <div class="logo-text">Authenticate Your Certificate</div>
+                        <div class="logo-subtext">Verification System</div>
+                    </div>
+                </div>
+                
+                <button class="menu-btn" id="menuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="hero">
+                <h1>Verify Your Certificate Authenticity</h1>
+                <p>Our ISO 9001:2015 certified verification system ensures you can instantly authenticate any certificate issued by GEM TESTING LABORATORY. Simply enter your certificate number to verify its validity.</p>
+                <div class="iso-badge">
+                    <span><i class="fas fa-award"></i> ISO 9001:2015 Certified Company</span>
+                </div>
+            </div>
+
+            <div class="verification-section">
+                <div class="section-header">
+                    <div class="section-icon"><i class="fas fa-search"></i></div>
+                    <h2 class="section-title">Certificate Verification</h2>
+                </div>
+                <div class="verification-content">
+                    <input type="text" class="cert-input" id="certNumber" placeholder="Enter certificate number (e.g., GTL123456)">
+                    <button class="verify-btn" id="verifyBtn">
+                        <span><i class="fas fa-check-circle"></i> Verify Certificate</span>
+                    </button>
+                    
+                    <div class="result-container result-success" id="successResult">
+                        <div class="result-icon" style="color: var(--success);"><i class="fas fa-check-circle"></i></div>
+                        <h3 class="result-title">Certificate Verified Successfully</h3>
+                        <p>This certificate is authentic and issued by GEM TESTING (IDENTIFICATION) LABORATORY.</p>
+                        <div class="result-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Certificate Number:</span>
+                                <span id="resultCertNumber"></span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Issue Date:</span>
+                                <span id="resultIssueDate"></span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Certificate Issued for:</span>
+                                <span id="resultCertName"></span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Status:</span>
+                                <span id="resultStatus" style="color: var(--success);">Authenticated & Approved</span>
+                            </div>
+                        </div>
+                        <div class="qr-section-display" id="verifyQrContainer">
+                            <p>Scan this QR to view certificate:</p>
+                            <div class="qr-image" id="verifyQrImage"></div>
+                            <button class="download-qr" id="downloadVerifyQr">
+                                <span><i class="fas fa-download"></i></span>
+                                <span>Download QR Code</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="result-container result-failure" id="failureResult">
+                        <div class="result-icon" style="color: var(--danger);"><i class="fas fa-times-circle"></i></div>
+                        <h3 class="result-title">Certificate Verification Failed</h3>
+                        <p>The certificate number you entered could not be verified. Please check the number and try again.</p>
+                        <div class="result-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Entered Number:</span>
+                                <span id="enteredCertNumber"></span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Status:</span>
+                                <span style="color: var(--danger);">Not Found</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            © 2023 GEM TESTING (IDENTIFICATION) LABORATORY. All rights reserved.<br>
+            Certificate verification system | An ISO 9015:2015 Certified Company
+        </div>
+    </footer>
+
+    <!-- Password Modal -->
+    <div class="password-modal" id="passwordModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Admin Access</h2>
+                <p class="modal-subtitle">Enter password to access administration panel</p>
+            </div>
+            <div class="modal-body">
+                <!-- NOTE: The password here is hardcoded for demonstration purposes. In a real-world application, a secure authentication system would be used. -->
+                <form class="password-form" id="passwordForm">
+                    <div class="password-input">
+                        <input type="password" class="password-field" id="passwordInput" placeholder="Enter password" required>
+                        <button type="button" class="toggle-password" id="togglePassword"><i class="fas fa-eye"></i></button>
+                    </div>
+                    <button type="submit" class="submit-btn" id="adminSubmitBtn">
+                        <span><i class="fas fa-lock-open"></i> Unlock Administration</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    
+    <!-- Admin Menu -->
+    <div class="menu-container" id="menuContainer">
+        <div class="menu-header">
+            <h3 class="menu-title">Administration Panel</h3>
+            <button class="menu-close" id="closeMenu"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <div class="menu-section">
+            <h4 class="section-title-sm"><i class="fas fa-key"></i> API Key Setup</h4>
+            <p class="text-sm">Enter your Gemini API Key to enable image processing. The key is saved locally in your browser and not shared.</p>
+            <div class="form-group">
+                <input type="text" id="apiKeyInput" placeholder="Enter your Gemini API Key">
+            </div>
+            <button class="upload-btn" id="saveApiKeyBtn" style="background: var(--accent); color: white; border: none; width: 100%; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: var(--transition);">
+                <span><i class="fas fa-save"></i> Save API Key</span>
+            </button>
+        </div>
+        
+        <div class="menu-section">
+            <h4 class="section-title-sm"><i class="fas fa-upload"></i> Upload Certificate</h4>
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon"><i class="fas fa-image"></i></div>
+                <p class="upload-text">Click to upload certificate image</p>
+                <p style="font-size: 0.85rem; color: var(--gray);">JPG, PNG, GIF</p>
+                <input type="file" class="file-input" id="fileInput" accept="image/*">
+            </div>
+            <button class="upload-btn" id="uploadBtn" style="background: var(--accent); color: white; border: none; width: 100%; padding: 12px; border-radius: 10px; font-weight: 600; margin-top: 10px; cursor: pointer; transition: var(--transition);">
+                <span><i class="fas fa-cloud-upload-alt"></i> Upload & Extract Info</span>
+            </button>
+        </div>
+        
+        <div class="menu-section">
+            <h4 class="section-title-sm"><i class="fas fa-file-invoice"></i> Uploaded Certificates</h4>
+            <div class="cert-cards" id="certCards">
+                <!-- Certificate cards will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Preview & QR Code Modal -->
+    <div class="image-preview-modal" id="imagePreviewModal">
+        <div class="preview-content">
+            <button class="close-preview" id="closePreview"><i class="fas fa-times"></i></button>
+            <img class="preview-image" id="previewImage">
+        </div>
+    </div>
+
+    <!-- QR Code Preview Modal -->
+    <div class="image-preview-modal" id="qrPreviewModal">
+        <div class="preview-content">
+            <button class="close-preview" id="closeQrPreview"><i class="fas fa-times"></i></button>
+            <div class="qr-section-display" style="background-color: white; border-radius: 10px; padding: 20px;">
+                <p>Scan to view certificate</p>
+                <div class="qr-image" id="modalQrImage"></div>
+                <button class="download-qr" id="downloadModalQr">
+                    <span><i class="fas fa-download"></i></span>
+                    <span>Download QR Code</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Message box to replace alerts -->
+    <div class="message-box" id="messageBox">
+        <span class="message-text"></span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const menuBtn = document.getElementById('menuBtn');
+            const menuOverlay = document.getElementById('menuOverlay');
+            const menuContainer = document.getElementById('menuContainer');
+            const closeMenu = document.getElementById('closeMenu');
+            const passwordModal = document.getElementById('passwordModal');
+            const passwordForm = document.getElementById('passwordForm');
+            const passwordInput = document.getElementById('passwordInput');
+            const togglePassword = document.getElementById('togglePassword');
+            const verifyBtn = document.getElementById('verifyBtn');
+            const certNumberInput = document.getElementById('certNumber');
+            const successResult = document.getElementById('successResult');
+            const failureResult = document.getElementById('failureResult');
+            const resultCertNumber = document.getElementById('resultCertNumber');
+            const resultIssueDate = document.getElementById('resultIssueDate');
+            const resultCertName = document.getElementById('resultCertName');
+            const enteredCertNumber = document.getElementById('enteredCertNumber');
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+            const uploadBtn = document.getElementById('uploadBtn');
+            const certCards = document.getElementById('certCards');
+            const imagePreviewModal = document.getElementById('imagePreviewModal');
+            const previewImage = document.getElementById('previewImage');
+            const closePreview = document.getElementById('closePreview');
+            const messageBox = document.getElementById('messageBox');
+            const messageText = messageBox.querySelector('.message-text');
+            const verifyQrContainer = document.getElementById('verifyQrContainer');
+            const verifyQrImage = document.getElementById('verifyQrImage');
+            const downloadVerifyQr = document.getElementById('downloadVerifyQr');
+            const qrPreviewModal = document.getElementById('qrPreviewModal');
+            const closeQrPreview = document.getElementById('closeQrPreview');
+            const modalQrImage = document.getElementById('modalQrImage');
+            const downloadModalQr = document.getElementById('downloadModalQr');
+            const adminSubmitBtn = document.getElementById('adminSubmitBtn');
+            const apiKeyInput = document.getElementById('apiKeyInput');
+            const saveApiKeyBtn = document.getElementById('saveApiKeyBtn');
+            const verifyBtnSpan = verifyBtn.querySelector('span');
+            const uploadBtnSpan = uploadBtn.querySelector('span');
+            const adminSubmitBtnSpan = adminSubmitBtn.querySelector('span');
+            const saveApiKeyBtnSpan = saveApiKeyBtn.querySelector('span');
+
+            // --- Local Storage Management for API Key ---
+            function getApiKey() {
+                // The Canvas environment provides an API key automatically.
+                // However, the user can also save their own key via the admin panel.
+                // We prioritize the key saved in local storage.
+                return localStorage.getItem('geminiApiKey') || "";
+            }
+            
+            function saveApiKey() {
+                const key = apiKeyInput.value.trim();
+                if (key) {
+                    localStorage.setItem('geminiApiKey', key);
+                    showMessage('API Key saved successfully!');
+                } else {
+                    showMessage('Please enter a valid API Key.');
+                }
+            }
+            
+            // --- Message Box Function ---
+            // A custom message box to replace native alerts.
+            function showMessage(message) {
+                messageText.textContent = message;
+                messageBox.classList.add('show');
+                setTimeout(() => {
+                    messageBox.classList.remove('show');
+                }, 3000); // Hide after 3 seconds
+            }
+
+            // --- Local Storage Management for Certificates ---
+            // Function to load certificates from local storage.
+            function loadCertificates() {
+                try {
+                    const certs = JSON.parse(localStorage.getItem('certificates')) || [];
+                    renderCertificates(certs);
+                } catch (e) {
+                    console.error("Failed to load certificates from local storage:", e);
+                    renderCertificates([]);
+                }
+            }
+
+            // Function to save certificates to local storage.
+            function saveCertificates(certs) {
+                try {
+                    localStorage.setItem('certificates', JSON.stringify(certs));
+                } catch (e) {
+                    console.error("Failed to save certificates to local storage:", e);
+                }
+            }
+            
+            // --- Function to generate and display QR code using qrcodejs ---
+            function generateAndDisplayQrCode(certNumber, containerId, downloadButtonId) {
+                const container = document.getElementById(containerId);
+                const downloadBtn = document.getElementById(downloadButtonId);
+                container.innerHTML = ''; // Clear existing content
+                
+                // Construct the URL to be encoded in the QR code
+                const url = `${window.location.origin}${window.location.pathname}?cert=${encodeURIComponent(certNumber)}`;
+                
+                // Create a new div to hold the QR code
+                const qrCodeDiv = document.createElement('div');
+                container.appendChild(qrCodeDiv);
+
+                // Generate QR code from the URL
+                const qrcode = new QRCode(qrCodeDiv, {
+                    text: url,
+                    width: 200,
+                    height: 200,
+                    colorDark: "#0A2540",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+                
+                // Event listener for downloading the QR code
+                downloadBtn.onclick = function() {
+                    const canvas = qrCodeDiv.querySelector('canvas');
+                    if (canvas) {
+                        const url = canvas.toDataURL('image/png');
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `certificate-${certNumber}-qr.png`;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    } else {
+                        showMessage('QR code canvas not found.');
+                    }
+                };
+            }
+
+            // --- Google Gemini API for Vision (Image to Text) ---
+            async function callVisionAPI(imageData) {
+                const apiKey = getApiKey();
+                if (!apiKey) {
+                    throw new Error("API Key not found. Please set your key in the Admin panel.");
+                }
+                showMessage("Extracting information from image...");
+                const prompt = "Extract the following information from this certificate image and return it as a JSON object: 'Certificate#', 'Issue Date', and 'Issued For'. The keys in the JSON object should be 'certNumber', 'issueDate', and 'issuedToName'. If a field is not found, use an empty string. The 'Certificate#' is often preceded by 'Certificate No.' or 'Certificate #'.";
+                
+                let chatHistory = [];
+                chatHistory.push({
+                    role: "user",
+                    parts: [
+                        { text: prompt },
+                        {
+                            inlineData: {
+                                mimeType: "image/jpeg", // or image/png based on input
+                                data: imageData
+                            }
+                        }
+                    ]
+                });
+
+                const payload = {
+                    contents: chatHistory,
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: {
+                                "certNumber": { "type": "STRING" },
+                                "issueDate": { "type": "STRING" },
+                                "issuedToName": { "type": "STRING" }
+                            }
+                        }
+                    }
+                };
+                
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                
+                let response;
+                let retries = 0;
+                const maxRetries = 5;
+                const baseDelay = 1000;
+
+                while (retries < maxRetries) {
+                    try {
+                        response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        if (response.status === 429) {
+                            const delay = baseDelay * Math.pow(2, retries);
+                            retries++;
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                            continue;
+                        }
+
+                        if (!response.ok) {
+                            throw new Error(`API call failed with status: ${response.status}`);
+                        }
+
+                        const result = await response.json();
+                        const jsonString = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                        if (jsonString) {
+                            return JSON.parse(jsonString);
+                        } else {
+                            throw new Error('API response format is incorrect or empty.');
+                        }
+                    } catch (error) {
+                        console.error('API call error:', error);
+                        throw error;
+                    }
+                }
+                throw new Error("API call failed after multiple retries.");
+            }
+
+            // --- Event Listeners ---
+            
+            // Password handling
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+            });
+
+            // Show password modal
+            menuBtn.addEventListener('click', function() {
+                passwordModal.classList.add('active');
+            });
+
+            // Close menu
+            closeMenu.addEventListener('click', function() {
+                menuContainer.classList.remove('active');
+                menuOverlay.style.display = 'none';
+            });
+
+            menuOverlay.addEventListener('click', function() {
+                menuContainer.classList.remove('active');
+                menuOverlay.style.display = 'none';
+            });
+
+            // Password verification
+            passwordForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const password = passwordInput.value;
+                
+                // Show loading state
+                adminSubmitBtn.disabled = true;
+                adminSubmitBtnSpan.innerHTML = '<span class="loading-spinner"></span>';
+
+                setTimeout(() => {
+                    adminSubmitBtn.disabled = false;
+                    adminSubmitBtnSpan.innerHTML = '<i class="fas fa-lock-open"></i> Unlock Administration';
+
+                    if (password === 'Authentic@2025') {
+                        passwordModal.classList.remove('active');
+                        menuContainer.classList.add('active');
+                        menuOverlay.style.display = 'block';
+                        passwordInput.value = '';
+                        apiKeyInput.value = getApiKey(); // Pre-fill API key input
+                    } else {
+                        showMessage('Incorrect password! Please try again.');
+                        passwordInput.value = '';
+                        passwordInput.focus();
+                    }
+                }, 500);
+            });
+
+            // Close password modal when clicking outside
+            passwordModal.addEventListener('click', function(e) {
+                if (e.target === passwordModal) {
+                    passwordModal.classList.remove('active');
+                }
+            });
+            
+            // Save API Key
+            saveApiKeyBtn.addEventListener('click', saveApiKey);
+            
+            // Certificate verification
+            verifyBtn.addEventListener('click', function() {
+                const certNumber = certNumberInput.value.trim();
+                
+                if (!certNumber) {
+                    showMessage('Please enter a certificate number');
+                    return;
+                }
+                
+                // Show loading state
+                verifyBtn.disabled = true;
+                verifyBtnSpan.innerHTML = '<span class="loading-spinner"></span>';
+                
+                // Retrieve certificates from local storage
+                const certs = JSON.parse(localStorage.getItem('certificates')) || [];
+                const foundCert = certs.find(cert => cert.certNumber.toLowerCase() === certNumber.toLowerCase());
+
+                // Simulate network delay
+                setTimeout(() => {
+                    verifyBtn.disabled = false;
+                    verifyBtnSpan.innerHTML = '<i class="fas fa-check-circle"></i> Verify Certificate';
+
+                    if (foundCert) {
+                        successResult.style.display = 'block';
+                        failureResult.style.display = 'none';
+                        resultCertNumber.textContent = foundCert.certNumber;
+                        resultIssueDate.textContent = foundCert.issueDate;
+                        resultCertName.textContent = foundCert.issuedToName;
+                        
+                        // Also generate and show QR code on the front page
+                        verifyQrContainer.style.display = 'flex';
+                        generateAndDisplayQrCode(foundCert.certNumber, 'verifyQrImage', 'downloadVerifyQr');
+
+                    } else {
+                        failureResult.style.display = 'block';
+                        successResult.style.display = 'none';
+                        verifyQrContainer.style.display = 'none';
+                        enteredCertNumber.textContent = certNumber;
+                    }
+                }, 500);
+            });
+
+            // File upload area click
+            uploadArea.addEventListener('click', function() {
+                fileInput.click();
+            });
+            
+            // Upload button functionality
+            uploadBtn.addEventListener('click', async function() {
+                const file = fileInput.files[0];
+
+                if (!file) {
+                    showMessage('Please select an image to upload');
+                    return;
+                }
+                
+                // Convert file to base64
+                const reader = new FileReader();
+                reader.onload = async function(e) {
+                    const imageUrl = e.target.result;
+                    const base64Data = imageUrl.split(',')[1];
+
+                    // Show loading state
+                    uploadBtn.disabled = true;
+                    uploadBtnSpan.innerHTML = '<span class="loading-spinner"></span>';
+
+                    try {
+                        const ocrData = await callVisionAPI(base64Data);
+                        
+                        if (!ocrData.certNumber || ocrData.certNumber.length < 5) {
+                            showMessage("Could not extract a valid certificate number. Please try a clearer image.");
+                            return;
+                        }
+                        
+                        const newCert = {
+                            certNumber: ocrData.certNumber,
+                            imageUrl: imageUrl, // Note: Storing full base64 image URL in localStorage is inefficient for large files.
+                            issueDate: ocrData.issueDate || 'N/A',
+                            issuedToName: ocrData.issuedToName || 'N/A'
+                        };
+                        
+                        const certificates = JSON.parse(localStorage.getItem('certificates')) || [];
+                        certificates.unshift(newCert);
+                        saveCertificates(certificates);
+                        renderCertificates(certificates);
+                        
+                        // Reset form
+                        fileInput.value = '';
+                        showMessage(`Certificate ${newCert.certNumber} uploaded successfully!`);
+
+                    } catch (error) {
+                        console.error("Error during OCR or upload:", error);
+                        showMessage("Failed to process the image: " + error.message);
+                    } finally {
+                        // Reset loading state
+                        uploadBtnSpan.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Upload & Extract Info';
+                        uploadBtn.disabled = false;
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+
+            // --- Dynamic Rendering of Certificates ---
+            function renderCertificates(certs) {
+                certCards.innerHTML = ''; // Clear existing cards
+                certs.forEach(cert => {
+                    const newCard = document.createElement('div');
+                    newCard.className = 'cert-card';
+                    newCard.dataset.certNumber = cert.certNumber;
+                    newCard.innerHTML = `
+                        <div class="cert-header">
+                            <span><i class="fas fa-file-alt"></i></span>
+                            <span class="cert-number">${cert.certNumber}</span>
+                        </div>
+                        <div class="cert-body">
+                            <img src="${cert.imageUrl}" class="cert-thumbnail" alt="Certificate ${cert.certNumber}">
+                            <div class="cert-actions">
+                                <button class="cert-btn view-btn">
+                                    <span><i class="fas fa-eye"></i></span>
+                                    <span>View</span>
+                                </button>
+                                <button class="cert-btn qr-btn">
+                                    <span><i class="fas fa-qrcode"></i></span>
+                                    <span>QR</span>
+                                </button>
+                                <button class="cert-btn delete-btn">
+                                    <span><i class="fas fa-trash-alt"></i></span>
+                                    <span>Delete</span>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    certCards.appendChild(newCard);
+                });
+            }
+
+            // Event delegation for dynamic buttons
+            certCards.addEventListener('click', function(e) {
+                // View button
+                if (e.target.closest('.view-btn')) {
+                    const card = e.target.closest('.cert-card');
+                    const imageUrl = card.querySelector('.cert-thumbnail').src;
+                    
+                    previewImage.src = imageUrl;
+                    imagePreviewModal.style.display = 'flex';
+                }
+                
+                // Generate QR button
+                if (e.target.closest('.qr-btn')) {
+                    const card = e.target.closest('.cert-card');
+                    const certNumber = card.dataset.certNumber;
+
+                    qrPreviewModal.style.display = 'flex';
+                    generateAndDisplayQrCode(certNumber, 'modalQrImage', 'downloadModalQr');
+                }
+                
+                // Delete button
+                if (e.target.closest('.delete-btn')) {
+                    // Replaced native 'confirm' with a message. In a real app, a custom modal would be used for confirmation.
+                    const card = e.target.closest('.cert-card');
+                    const certNumberToDelete = card.dataset.certNumber;
+                    const certificates = JSON.parse(localStorage.getItem('certificates')) || [];
+                    const updatedCerts = certificates.filter(cert => cert.certNumber !== certNumberToDelete);
+                    saveCertificates(updatedCerts);
+                    renderCertificates(updatedCerts);
+                    showMessage('Certificate deleted successfully!');
+                }
+            });
+
+            // Close image preview
+            closePreview.addEventListener('click', function() {
+                imagePreviewModal.style.display = 'none';
+            });
+            imagePreviewModal.addEventListener('click', function(e) {
+                if (e.target === imagePreviewModal) {
+                    imagePreviewModal.style.display = 'none';
+                }
+            });
+            
+            // Close QR preview
+            closeQrPreview.addEventListener('click', function() {
+                qrPreviewModal.style.display = 'none';
+            });
+            qrPreviewModal.addEventListener('click', function(e) {
+                if (e.target === qrPreviewModal) {
+                    qrPreviewModal.style.display = 'none';
+                }
+            });
+
+            // Initialize on page load
+            loadCertificates();
+            passwordInput.value = '';
+            
+            // Check for a certificate number in the URL query parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const certFromUrl = urlParams.get('cert');
+            if (certFromUrl) {
+                certNumberInput.value = decodeURIComponent(certFromUrl);
+                // Automatically trigger the verification process
+                verifyBtn.click();
+            } else {
+                certNumberInput.focus();
+            }
+        });
+    </script>
+</body>
+</html>
